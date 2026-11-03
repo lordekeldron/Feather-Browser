@@ -4,10 +4,10 @@ import { useState } from 'react'
 import { ArrowRight, ChevronDown, CircleHelp, Download, ExternalLink, Feather, Gauge, Globe2, LockKeyhole, Menu, Plus, Search, ShieldCheck, ShieldX, Sparkles, X, Zap } from 'lucide-react'
 
 const quickLinks = [
-  { label: 'Notícias', detail: 'As principais do dia', icon: 'N', color: '#e6f1ff' },
-  { label: 'YouTube', detail: 'Vídeos para assistir', icon: '▶', color: '#ffe8e7' },
-  { label: 'Wikipedia', detail: 'Explore e aprenda', icon: 'W', color: '#eeece9' },
-  { label: 'GitHub', detail: 'Código aberto', icon: '◉', color: '#e9edf0' },
+  { label: 'Notícias', detail: 'As principais do dia', icon: 'N', color: '#e6f1ff', url: 'https://news.google.com' },
+  { label: 'YouTube', detail: 'Vídeos para assistir', icon: '▶', color: '#ffe8e7', url: 'https://youtube.com' },
+  { label: 'Wikipedia', detail: 'Explore e aprenda', icon: 'W', color: '#eeece9', url: 'https://wikipedia.org' },
+  { label: 'GitHub', detail: 'Código aberto', icon: '◉', color: '#e9edf0', url: 'https://github.com' },
 ]
 
 export default function Home() {
@@ -16,11 +16,20 @@ export default function Home() {
   const [showMenu, setShowMenu] = useState(false)
   const [notice, setNotice] = useState(false)
 
-  function navigate() {
-    if (!address.trim()) return
-    setActiveTab(address.replace(/^https?:\/\//, '').split('/')[0])
+  function navigate(value = address) {
+    const input = value.trim()
+    if (!input) return
+
+    const looksLikeUrl = /^(https?:\/\/)?([\w-]+\.)+[a-z]{2,}(\/.*)?$/i.test(input)
+    const destination = looksLikeUrl
+      ? (input.startsWith('http') ? input : `https://${input}`)
+      : `https://www.google.com/search?q=${encodeURIComponent(input)}`
+
+    setActiveTab(input.replace(/^https?:\/\//, '').split('/')[0])
     setNotice(true)
-    window.setTimeout(() => setNotice(false), 3500)
+    window.setTimeout(() => {
+      window.location.href = destination
+    }, 250)
   }
 
   return (
@@ -61,7 +70,7 @@ export default function Home() {
         </div>
 
         <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {quickLinks.map(link => <button key={link.label} onClick={() => { setAddress(link.label); navigate() }} className="group flex items-center gap-3 rounded-2xl border border-[#e4ecec] bg-white p-4 text-left shadow-[0_2px_8px_rgba(16,43,63,0.02)] transition hover:-translate-y-0.5 hover:border-[#b8ded7] hover:shadow-md"><div className="flex size-10 items-center justify-center rounded-xl text-sm font-bold text-[#52646e]" style={{backgroundColor: link.color}}>{link.icon}</div><div className="min-w-0"><p className="font-semibold text-[#183042]">{link.label}</p><p className="mt-0.5 truncate text-xs text-[#8a9aa2]">{link.detail}</p></div><ArrowRight className="ml-auto text-[#b8c6c9] transition group-hover:translate-x-0.5 group-hover:text-[#12a594]" size={16} /></button>)}
+          {quickLinks.map(link => <button key={link.label} onClick={() => navigate(link.url)} className="group flex items-center gap-3 rounded-2xl border border-[#e4ecec] bg-white p-4 text-left shadow-[0_2px_8px_rgba(16,43,63,0.02)] transition hover:-translate-y-0.5 hover:border-[#b8ded7] hover:shadow-md"><div className="flex size-10 items-center justify-center rounded-xl text-sm font-bold text-[#52646e]" style={{backgroundColor: link.color}}>{link.icon}</div><div className="min-w-0"><p className="font-semibold text-[#183042]">{link.label}</p><p className="mt-0.5 truncate text-xs text-[#8a9aa2]">{link.detail}</p></div><ArrowRight className="ml-auto text-[#b8c6c9] transition group-hover:translate-x-0.5 group-hover:text-[#12a594]" size={16} /></button>)}
         </div>
 
         <div className="mt-10 grid gap-4 md:grid-cols-[1.4fr_1fr]">
