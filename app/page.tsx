@@ -56,7 +56,7 @@ export default function Home() {
             <LockKeyhole className="mr-2 shrink-0 text-[#12a594]" size={15} />
             <input value={address} onChange={e => setAddress(e.target.value)} onKeyDown={e => { if (e.key === 'Enter' && !e.nativeEvent.isComposing && e.keyCode !== 229) navigate() }} placeholder="Pesquise ou digite um endereço" aria-label="Barra de endereço" className="h-11 min-w-0 flex-1 bg-transparent text-sm text-[#183042] outline-none placeholder:text-[#92a1aa]" />
             {address && <button onClick={() => setAddress('')} aria-label="Limpar endereço" className="p-1 text-[#718494]"><X size={15} /></button>}
-            <button onClick={navigate} aria-label="Pesquisar" className="flex size-8 items-center justify-center rounded-lg bg-[#102b3f] text-white transition hover:bg-[#19435d]"><Search size={15} /></button>
+            <button onClick={() => navigate()} aria-label="Pesquisar" className="flex size-8 items-center justify-center rounded-lg bg-[#102b3f] text-white transition hover:bg-[#19435d]"><Search size={15} /></button>
           </div>
           <button aria-label="Nova aba" className="flex size-11 shrink-0 items-center justify-center rounded-xl border border-[#dce7e6] bg-white text-[#718494] transition hover:border-[#12a594] hover:text-[#12a594]"><Plus size={19} /></button>
         </div>
