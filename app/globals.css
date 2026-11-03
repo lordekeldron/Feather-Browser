@@ -1,0 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { --navy: #102b3f; --teal: #12a594; --mint: #dff5ef; --ink: #183042; --muted: #718494; --line: #e4ecec; --paper: #f7faf9; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: 'DM Sans', sans-serif; }
+button, input { font: inherit; }
+::selection { background: #bfe9df; color: var(--navy); }
